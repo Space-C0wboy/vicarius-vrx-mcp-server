@@ -1,8 +1,5 @@
 import importlib.util
-import sys
 from pathlib import Path
-
-import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "tests" / "fixtures" / "mini_openapi.json"

@@ -1,4 +1,3 @@
-import pytest
 
 from vrx_mcp.tools import _common
 

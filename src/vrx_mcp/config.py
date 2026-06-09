@@ -26,7 +26,7 @@ class Config:
     http_port: int
 
     @classmethod
-    def from_env(cls) -> "Config":
+    def from_env(cls) -> Config:
         api_key = os.getenv("VRX_API_KEY", "").strip()
         if not api_key:
             raise ConfigError(
