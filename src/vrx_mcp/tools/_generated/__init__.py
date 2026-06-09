@@ -1,0 +1,45 @@
+"""GENERATED — DO NOT EDIT. Aggregates every generated domain module."""
+
+from __future__ import annotations
+
+from . import (
+    aggregation,
+    automation,
+    automation_task_templates,
+    automations,
+    date,
+    endpoint,
+    endpoint_attributes,
+    endpoint_vulnerability,
+    external_reference_external_references,
+    incident_event,
+    operating_system_family,
+    organization_endpoint_external_reference_external_references,
+    organization_endpoint_group,
+    organization_endpoint_patch_patch_packages,
+    organization_endpoint_publisher_operating_systems,
+    organization_endpoint_publisher_product_versions,
+    organization_endpoint_vulnerabilities,
+    organization_external_reference_source_settings,
+    organization_publisher_operating_systems,
+    organization_publisher_products,
+    organization_scan_input,
+    patch_management,
+    patch_package,
+    patch_package_links,
+    publisher_product_photos,
+    script_template,
+    script_template_commands,
+    task,
+    task_endpoints_event,
+    task_event,
+    task_template,
+    user,
+    user_invitation,
+    vulnerability,
+    vulnerability_attack_vectors,
+    vulnerability_internal_tags,
+    vulnerability_links,
+)
+
+GENERATED_MODULES = [aggregation, automation, automation_task_templates, automations, date, endpoint, endpoint_attributes, endpoint_vulnerability, external_reference_external_references, incident_event, operating_system_family, organization_endpoint_external_reference_external_references, organization_endpoint_group, organization_endpoint_patch_patch_packages, organization_endpoint_publisher_operating_systems, organization_endpoint_publisher_product_versions, organization_endpoint_vulnerabilities, organization_external_reference_source_settings, organization_publisher_operating_systems, organization_publisher_products, organization_scan_input, patch_management, patch_package, patch_package_links, publisher_product_photos, script_template, script_template_commands, task, task_endpoints_event, task_event, task_template, user, user_invitation, vulnerability, vulnerability_attack_vectors, vulnerability_internal_tags, vulnerability_links]
