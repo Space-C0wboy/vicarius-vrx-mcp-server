@@ -44,6 +44,8 @@ def test_mutating_classification():
             by_name[o.tool_name] = o
     # search POST is non-mutating despite being POST
     assert by_name["vulnerability_search"].mutating is False
+    # a POST /count is a read, not a mutation, so it stays available in read-only
+    assert by_name["endpoint_count"].mutating is False
     # PUT insert and DELETE delete are mutating
     assert by_name["organization_endpoint_group_insert"].mutating is True
     assert by_name["endpoint_delete"].mutating is True

@@ -57,6 +57,16 @@
           { "name": "enabled", "in": "query", "required": false, "schema": { "type": "boolean" } }
         ]
       }
+    },
+    "/endpoint/count": {
+      "post": {
+        "tags": ["endpoint-controller-impl"],
+        "summary": "Count objects by stuff.",
+        "operationId": "count",
+        "requestBody": {
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        }
+      }
     }
   }
 }

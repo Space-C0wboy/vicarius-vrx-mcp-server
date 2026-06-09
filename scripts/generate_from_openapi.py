@@ -35,9 +35,24 @@ if __name__ not in sys.modules:
 _HTTP_METHODS = ("get", "post", "put", "delete", "patch")
 _SCALAR_ANNOT = {"string": "str", "integer": "int", "number": "float", "boolean": "bool"}
 
-# Search-style POSTs are reads, not writes. Match by path suffix or summary.
+# Search-style POSTs that are GET/POST twins of the same operation — used ONLY for
+# deduping (we keep the POST and drop the redundant GET). Match by path suffix or summary.
 _SEARCH_PATH_RE = re.compile(r"/(search|searchByFields|filter|searchGroup|group)$")
 _SEARCH_SUMMARIES = {"returns events", "get object by connection"}
+
+# Broader set of POSTs that are actually READS (search/count/list/lookup), not writes —
+# used for read/write classification (so they stay available in read-only mode). vRx uses
+# POST for several read operations: */search*, */filter, */count, */searchByObjects, and a
+# few "returns list ..." endpoints. Summaries are matched with trailing punctuation stripped.
+_READ_POST_PATH_RE = re.compile(
+    r"/(search|searchByFields|searchByObjects|filter|searchGroup|group|count)$"
+)
+_READ_POST_SUMMARIES = {
+    "returns events",
+    "get object by connection",
+    "count objects by stuff",
+    "returns list of patches",
+}
 
 # Curated descriptions for high-traffic domains (seeded from the portal API library).
 OVERRIDES: dict[str, str] = {
@@ -49,6 +64,15 @@ OVERRIDES: dict[str, str] = {
     "endpoint_search": (
         "Search endpoints (assets). RSQL `q` filter, e.g. q=endpointName=='HOST01'. "
         "size<=500, from<=10000; use sort + seek paging beyond 10000."
+    ),
+    "patch_management_patch": (
+        "List patches. REQUIRED: `softwareType` — must be 'APP' or 'OS'. Also accepts "
+        "`searchQueries` (array of join filters), `q` (RSQL), and `from`/`size`. "
+        "Results are in serverResponseObject."
+    ),
+    "patch_management_patch_1": (
+        "List patches (POST form). REQUIRED: `softwareType` — must be 'APP' or 'OS'. "
+        "Also accepts `searchQueries`/`body` join filters, `q` (RSQL), and `from`/`size`."
     ),
 }
 
@@ -98,16 +122,24 @@ def _action_from_path(path: str) -> str:
 
 
 def _is_search(path: str, summary: str) -> bool:
+    """True for search-style ops that are GET/POST twins (used for dedup)."""
     if _SEARCH_PATH_RE.search(path):
         return True
-    return summary.strip().lower() in _SEARCH_SUMMARIES
+    return summary.strip().rstrip(".").lower() in _SEARCH_SUMMARIES
+
+
+def _is_read_post(path: str, summary: str) -> bool:
+    """True when a POST is actually a read (search/count/list), so it isn't a mutation."""
+    if _READ_POST_PATH_RE.search(path):
+        return True
+    return summary.strip().rstrip(".").lower() in _READ_POST_SUMMARIES
 
 
 def _classify_mutating(method: str, path: str, summary: str) -> bool:
     if method in ("put", "delete", "patch"):
         return True
     if method == "post":
-        return not _is_search(path, summary)
+        return not _is_read_post(path, summary)
     return False  # get
 
 
