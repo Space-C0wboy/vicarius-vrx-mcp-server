@@ -1,0 +1,62 @@
+{
+  "openapi": "3.0.1",
+  "info": { "title": "Mini", "version": "1" },
+  "servers": [{ "url": "/vicarius-external-data-api" }],
+  "paths": {
+    "/vulnerability/search": {
+      "get": {
+        "tags": ["vulnerability-controller-impl"],
+        "summary": "Returns events",
+        "operationId": "search",
+        "parameters": [
+          { "name": "from", "in": "query", "required": true, "schema": { "type": "integer" } },
+          { "name": "size", "in": "query", "required": true, "schema": { "type": "integer" } },
+          { "name": "q", "in": "query", "required": true, "schema": { "type": "string" } }
+        ]
+      },
+      "post": {
+        "tags": ["vulnerability-controller-impl"],
+        "summary": "Returns events",
+        "operationId": "search_1",
+        "parameters": [
+          { "name": "from", "in": "query", "required": true, "schema": { "type": "integer" } },
+          { "name": "size", "in": "query", "required": true, "schema": { "type": "integer" } }
+        ],
+        "requestBody": {
+          "content": { "application/json": { "schema": { "type": "array" } } }
+        }
+      }
+    },
+    "/endpoint/delete": {
+      "delete": {
+        "tags": ["endpoint-controller-impl"],
+        "summary": "Delete an endpoint",
+        "operationId": "delete",
+        "requestBody": {
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        }
+      }
+    },
+    "/organizationEndpointGroup/insert": {
+      "put": {
+        "tags": ["organization-endpoint-group-controller-impl"],
+        "summary": "Create an asset group",
+        "operationId": "insert",
+        "requestBody": {
+          "content": { "application/json": { "schema": { "type": "object" } } }
+        }
+      }
+    },
+    "/endpoint/{endpointId}/attributes": {
+      "get": {
+        "tags": ["endpoint-controller-impl"],
+        "summary": "Get attributes",
+        "operationId": "getAttrs",
+        "parameters": [
+          { "name": "endpointId", "in": "path", "required": true, "schema": { "type": "integer" } },
+          { "name": "enabled", "in": "query", "required": false, "schema": { "type": "boolean" } }
+        ]
+      }
+    }
+  }
+}
