@@ -45,8 +45,12 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     @mcp.tool(name="vrx_request", description=_DESCRIPTION)
     async def vrx_request(
         method: Annotated[str, Field(description="HTTP method, e.g. GET or POST")],
-        path: Annotated[str, Field(description="Path relative to the API base, e.g. /endpoint/search")],
-        query: Annotated[Any | None, Field(default=None, description="Query params as an object")] = None,
+        path: Annotated[
+            str, Field(description="Path relative to the API base, e.g. /endpoint/search")
+        ],
+        query: Annotated[
+            Any | None, Field(default=None, description="Query params as an object")
+        ] = None,
         body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
     ) -> Any:
         return await _do_request(method, path, query, body, read_only=read_only)
