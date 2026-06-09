@@ -1,6 +1,7 @@
 # Vicarius vRx MCP Server
 
-[![Python versions](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
+[![PyPI version](https://img.shields.io/pypi/v/vrx-mcp.svg)](https://pypi.org/project/vrx-mcp/)
+[![Python versions](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://pypi.org/project/vrx-mcp/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![CI](https://github.com/Space-C0wboy/vicarius-vrx-mcp-server/actions/workflows/ci.yml/badge.svg)](https://github.com/Space-C0wboy/vicarius-vrx-mcp-server/actions/workflows/ci.yml)
 [![status: beta](https://img.shields.io/badge/status-beta-orange.svg)](#)
@@ -75,7 +76,17 @@ See [`docs/ENDPOINTS.md`](docs/ENDPOINTS.md) for the **full tool ↔ method ↔ 
 
 ## Quick start
 
-### Install (from source)
+### Install
+
+```bash
+# with uv (recommended)
+uv tool install vrx-mcp
+
+# or with pip
+pip install vrx-mcp
+```
+
+This installs the `vrx-mcp` console script. For development from source:
 
 ```bash
 git clone https://github.com/Space-C0wboy/vicarius-vrx-mcp-server
@@ -84,10 +95,6 @@ python -m venv .venv
 .venv/Scripts/python -m pip install -e ".[dev]"   # Windows
 # .venv/bin/python -m pip install -e ".[dev]"      # macOS/Linux
 ```
-
-> [!NOTE]
-> Not yet published to PyPI — install from source. Once installed, the console script
-> `vrx-mcp` is available inside the virtual environment.
 
 ### Getting an API key
 
@@ -162,7 +169,7 @@ claude mcp add vrx \
   --env VRX_API_KEY=your-key-here \
   --env VRX_BASE_URL=https://your-dashboard.vicarius.cloud/vicarius-external-data-api \
   --env VRX_READ_ONLY=true \
-  -- /absolute/path/to/.venv/Scripts/python -m vrx_mcp.server
+  -- vrx-mcp
 ```
 
 ### Claude Desktop
@@ -175,8 +182,7 @@ Edit `claude_desktop_config.json`:
 {
   "mcpServers": {
     "vrx": {
-      "command": "C:\\absolute\\path\\to\\.venv\\Scripts\\python.exe",
-      "args": ["-m", "vrx_mcp.server"],
+      "command": "vrx-mcp",
       "env": {
         "VRX_API_KEY": "your-key-here",
         "VRX_BASE_URL": "https://your-dashboard.vicarius.cloud/vicarius-external-data-api",
