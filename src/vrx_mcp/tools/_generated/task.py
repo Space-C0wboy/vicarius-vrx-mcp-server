@@ -21,7 +21,7 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Mutating tools (registered only when not read_only) ---
     if not read_only:
-        @mcp.tool(name="task_update", description="task \u00b7 POST /task/update \u2014 Update instance of the object")
+        @mcp.tool(name="task_update", description="task \u00b7 POST /task/update \u2014 Update instance of the object Requires a JSON request body.")
         async def task_update(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:

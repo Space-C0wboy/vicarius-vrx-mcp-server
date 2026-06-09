@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="script_template_search", description="script_template \u00b7 POST /scriptTemplate/search \u2014 Returns events")
+    @mcp.tool(name="script_template_search", description="script_template \u00b7 POST /scriptTemplate/search \u2014 Returns events Required: q, from, size.")
     async def script_template_search(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         sort: Annotated[str | None, Field(default=None, description="query param sort (str)")] = None,

@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="organization_endpoint_publisher_operating_systems_locate_object_position", description="organization_endpoint_publisher_operating_systems \u00b7 GET /organizationEndpointPublisherOperatingSystems/locateObjectPosition \u2014 Returns events")
+    @mcp.tool(name="organization_endpoint_publisher_operating_systems_locate_object_position", description="organization_endpoint_publisher_operating_systems \u00b7 GET /organizationEndpointPublisherOperatingSystems/locateObjectPosition \u2014 Returns events Required: q, positionQuery.")
     async def organization_endpoint_publisher_operating_systems_locate_object_position(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         positionQuery: Annotated[str | None, Field(default=None, description="query param positionQuery (str)")] = None,
@@ -25,7 +25,7 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("GET", "/organizationEndpointPublisherOperatingSystems/locateObjectPosition", path_params={}, query={"q": q, "positionQuery": positionQuery, "sort": sort}, body=None)
 
-    @mcp.tool(name="organization_endpoint_publisher_operating_systems_search", description="organization_endpoint_publisher_operating_systems \u00b7 POST /organizationEndpointPublisherOperatingSystems/search \u2014 Returns events")
+    @mcp.tool(name="organization_endpoint_publisher_operating_systems_search", description="organization_endpoint_publisher_operating_systems \u00b7 POST /organizationEndpointPublisherOperatingSystems/search \u2014 Returns events Required: q, from, size.")
     async def organization_endpoint_publisher_operating_systems_search(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         sort: Annotated[str | None, Field(default=None, description="query param sort (str)")] = None,

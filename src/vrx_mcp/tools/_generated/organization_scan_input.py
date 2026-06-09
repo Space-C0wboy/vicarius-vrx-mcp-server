@@ -17,14 +17,14 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="organization_scan_input_redirect", description="organization_scan_input \u00b7 GET /organizationScanInput/redirect \u2014 Redirect to static file by id.")
+    @mcp.tool(name="organization_scan_input_redirect", description="organization_scan_input \u00b7 GET /organizationScanInput/redirect \u2014 Redirect to static file by id. Required: id.")
     async def organization_scan_input_redirect(
         id: Annotated[str | None, Field(default=None, description="query param id (str)")] = None,
         preformExternalRedirect: Annotated[bool | None, Field(default=None, description="query param preformExternalRedirect (bool)")] = None,
     ) -> Any:
         return await execute_request("GET", "/organizationScanInput/redirect", path_params={}, query={"id": id, "preformExternalRedirect": preformExternalRedirect}, body=None)
 
-    @mcp.tool(name="organization_scan_input_search", description="organization_scan_input \u00b7 POST /organizationScanInput/search \u2014 Returns events")
+    @mcp.tool(name="organization_scan_input_search", description="organization_scan_input \u00b7 POST /organizationScanInput/search \u2014 Returns events Required: q, from, size.")
     async def organization_scan_input_search(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         sort: Annotated[str | None, Field(default=None, description="query param sort (str)")] = None,
@@ -38,18 +38,18 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Mutating tools (registered only when not read_only) ---
     if not read_only:
-        @mcp.tool(name="organization_scan_input_insert_and_upload", description="organization_scan_input \u00b7 PUT /organizationScanInput/insertAndUpload \u2014 Inserts object and stores its file")
+        @mcp.tool(name="organization_scan_input_insert_and_upload", description="organization_scan_input \u00b7 PUT /organizationScanInput/insertAndUpload \u2014 Inserts object and stores its file Required: q.")
         async def organization_scan_input_insert_and_upload(
             q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("PUT", "/organizationScanInput/insertAndUpload", path_params={}, query={"q": q}, body=body)
-        @mcp.tool(name="organization_scan_input_update", description="organization_scan_input \u00b7 POST /organizationScanInput/update \u2014 Update instance of the object")
+        @mcp.tool(name="organization_scan_input_update", description="organization_scan_input \u00b7 POST /organizationScanInput/update \u2014 Update instance of the object Requires a JSON request body.")
         async def organization_scan_input_update(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("POST", "/organizationScanInput/update", path_params={}, query={}, body=body)
-        @mcp.tool(name="organization_scan_input_upload", description="organization_scan_input \u00b7 PUT /organizationScanInput/upload \u2014 Stores events")
+        @mcp.tool(name="organization_scan_input_upload", description="organization_scan_input \u00b7 PUT /organizationScanInput/upload \u2014 Stores events Requires a JSON request body.")
         async def organization_scan_input_upload(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:

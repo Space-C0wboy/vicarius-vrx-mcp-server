@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="aggregation_group", description="aggregation \u00b7 POST /aggregation/group \u2014 Group objects by stuff.")
+    @mcp.tool(name="aggregation_group", description="aggregation \u00b7 POST /aggregation/group \u2014 Group objects by stuff. Required: metricActionName, metricAnalyticsEventAction, q, from, size, group.")
     async def aggregation_group(
         metricActionName: Annotated[str | None, Field(default=None, description="query param metricActionName (str)")] = None,
         metricAnalyticsEventAction: Annotated[str | None, Field(default=None, description="query param metricAnalyticsEventAction (str)")] = None,
@@ -34,7 +34,7 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("POST", "/aggregation/group", path_params={}, query={"metricActionName": metricActionName, "metricAnalyticsEventAction": metricAnalyticsEventAction, "q": q, "sort": sort, "sortOriginalModelFields": sortOriginalModelFields, "includeOriginalDoc": includeOriginalDoc, "includeOriginalDocIdOnly": includeOriginalDocIdOnly, "includeAllNestedAggregations": includeAllNestedAggregations, "from": from_, "size": size, "group": group}, body=body)
 
-    @mcp.tool(name="aggregation_search_group", description="aggregation \u00b7 POST /aggregation/searchGroup \u2014 Group objects by stuff.")
+    @mcp.tool(name="aggregation_search_group", description="aggregation \u00b7 POST /aggregation/searchGroup \u2014 Group objects by stuff. Required: objectName, q, from, size, group.")
     async def aggregation_search_group(
         objectName: Annotated[str | None, Field(default=None, description="query param objectName (str)")] = None,
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,

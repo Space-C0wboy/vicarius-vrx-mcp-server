@@ -38,7 +38,7 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("GET", "/v1/automations", path_params={}, query={"from": from_, "size": size, "sort": sort, "dateFrom": dateFrom, "dateTo": dateTo, "automationNextExecutionTimeFrom": automationNextExecutionTimeFrom, "automationNextExecutionTimeTo": automationNextExecutionTimeTo, "automationTypeIn": automationTypeIn, "automationTypeNotIn": automationTypeNotIn, "automationStateNames": automationStateNames, "automationStepActionsIn": automationStepActionsIn, "automationStepActionsNotIn": automationStepActionsNotIn, "automationIsActive": automationIsActive, "automationName": automationName, "automationIdIn": automationIdIn, "automationIdNotIn": automationIdNotIn}, body=None)
 
-    @mcp.tool(name="automations_automations_2", description="automations \u00b7 GET /v1/automations/{id} \u2014 Returns automation by id")
+    @mcp.tool(name="automations_automations_2", description="automations \u00b7 GET /v1/automations/{id} \u2014 Returns automation by id Required: id.")
     async def automations_automations_2(
         id: Annotated[int, Field(description="path param id")],
     ) -> Any:
@@ -46,18 +46,18 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Mutating tools (registered only when not read_only) ---
     if not read_only:
-        @mcp.tool(name="automations_automations_1", description="automations \u00b7 POST /v1/automations \u2014 Inserts automation")
+        @mcp.tool(name="automations_automations_1", description="automations \u00b7 POST /v1/automations \u2014 Inserts automation Requires a JSON request body.")
         async def automations_automations_1(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("POST", "/v1/automations", path_params={}, query={}, body=body)
-        @mcp.tool(name="automations_automations_3", description="automations \u00b7 PUT /v1/automations/{id} \u2014 Updates automation")
+        @mcp.tool(name="automations_automations_3", description="automations \u00b7 PUT /v1/automations/{id} \u2014 Updates automation Required: id. Requires a JSON request body.")
         async def automations_automations_3(
             id: Annotated[int, Field(description="path param id")],
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("PUT", "/v1/automations/{id}", path_params={"id": id}, query={}, body=body)
-        @mcp.tool(name="automations_update_state", description="automations \u00b7 PUT /v1/automations/{id}/updateState \u2014 Updates automation state")
+        @mcp.tool(name="automations_update_state", description="automations \u00b7 PUT /v1/automations/{id}/updateState \u2014 Updates automation state Required: id. Requires a JSON request body.")
         async def automations_update_state(
             id: Annotated[int, Field(description="path param id")],
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,

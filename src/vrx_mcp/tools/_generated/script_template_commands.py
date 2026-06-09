@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="script_template_commands_search_by_fields", description="script_template_commands \u00b7 POST /scriptTemplateCommands/searchByFields \u2014 Get object by connection.")
+    @mcp.tool(name="script_template_commands_search_by_fields", description="script_template_commands \u00b7 POST /scriptTemplateCommands/searchByFields \u2014 Get object by connection. Required: from, size, q.")
     async def script_template_commands_search_by_fields(
         from_: Annotated[int | None, Field(default=None, description="query param from (int)")] = None,
         size: Annotated[int | None, Field(default=None, description="query param size (int)")] = None,

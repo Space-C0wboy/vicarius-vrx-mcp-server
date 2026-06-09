@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="external_reference_external_references_search_by_fields", description="external_reference_external_references \u00b7 POST /externalReferenceExternalReferences/searchByFields \u2014 Get object by connection.")
+    @mcp.tool(name="external_reference_external_references_search_by_fields", description="external_reference_external_references \u00b7 POST /externalReferenceExternalReferences/searchByFields \u2014 Get object by connection. Required: from, size, q.")
     async def external_reference_external_references_search_by_fields(
         from_: Annotated[int | None, Field(default=None, description="query param from (int)")] = None,
         size: Annotated[int | None, Field(default=None, description="query param size (int)")] = None,
@@ -31,7 +31,7 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("POST", "/externalReferenceExternalReferences/searchByFields", path_params={}, query={"from": from_, "size": size, "enabled": enabled, "addCount": addCount, "q": q, "sort": sort, "groupBy": groupBy, "includeFields": includeFields}, body=body)
 
-    @mcp.tool(name="external_reference_external_references_search_by_objects", description="external_reference_external_references \u00b7 POST /externalReferenceExternalReferences/searchByObjects \u2014 Get object by connection.")
+    @mcp.tool(name="external_reference_external_references_search_by_objects", description="external_reference_external_references \u00b7 POST /externalReferenceExternalReferences/searchByObjects \u2014 Get object by connection. Required: from, size, q. Requires a JSON request body.")
     async def external_reference_external_references_search_by_objects(
         enabled: Annotated[bool | None, Field(default=None, description="query param enabled (bool)")] = None,
         from_: Annotated[int | None, Field(default=None, description="query param from (int)")] = None,

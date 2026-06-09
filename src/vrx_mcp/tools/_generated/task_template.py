@@ -21,17 +21,17 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Mutating tools (registered only when not read_only) ---
     if not read_only:
-        @mcp.tool(name="task_template_insert", description="task_template \u00b7 PUT /taskTemplate/insert \u2014 Insert instance of the object")
+        @mcp.tool(name="task_template_insert", description="task_template \u00b7 PUT /taskTemplate/insert \u2014 Insert instance of the object Requires a JSON request body.")
         async def task_template_insert(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("PUT", "/taskTemplate/insert", path_params={}, query={}, body=body)
-        @mcp.tool(name="task_template_insert_many", description="task_template \u00b7 PUT /taskTemplate/insertMany \u2014 Inserte instance of the object")
+        @mcp.tool(name="task_template_insert_many", description="task_template \u00b7 PUT /taskTemplate/insertMany \u2014 Inserte instance of the object Requires a JSON request body.")
         async def task_template_insert_many(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("PUT", "/taskTemplate/insertMany", path_params={}, query={}, body=body)
-        @mcp.tool(name="task_template_update", description="task_template \u00b7 POST /taskTemplate/update \u2014 Update instance of the object")
+        @mcp.tool(name="task_template_update", description="task_template \u00b7 POST /taskTemplate/update \u2014 Update instance of the object Requires a JSON request body.")
         async def task_template_update(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:

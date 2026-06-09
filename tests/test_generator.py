@@ -70,6 +70,16 @@ def test_generation_is_deterministic(tmp_path):
     assert "vulnerability_search" in f1
 
 
+def test_description_surfaces_required_params_and_enums(tmp_path):
+    gen = _load_generator()
+    gen.generate(FIXTURE, tmp_path, tmp_path / "ENDPOINTS.md")
+    code = (tmp_path / "endpoint.py").read_text()
+    # endpoint_attributes (GET /endpoint/{endpointId}/attributes) has a required path
+    # param plus a required enum query param — both must show up in the description.
+    assert "Required: endpointId, softwareType." in code
+    assert "Allowed values: softwareType=APP|OS." in code
+
+
 def test_generated_module_imports_and_registers(tmp_path):
     gen = _load_generator()
     gen.generate(FIXTURE, tmp_path, tmp_path / "ENDPOINTS.md")

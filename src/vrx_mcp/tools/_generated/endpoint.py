@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="endpoint_search", description="Search endpoints (assets). RSQL `q` filter, e.g. q=endpointName=='HOST01'. size<=500, from<=10000; use sort + seek paging beyond 10000.")
+    @mcp.tool(name="endpoint_search", description="Search endpoints (assets). RSQL `q` filter, e.g. q=endpointName=='HOST01'. size<=500, from<=10000; use sort + seek paging beyond 10000. Required: q, from, size.")
     async def endpoint_search(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         sort: Annotated[str | None, Field(default=None, description="query param sort (str)")] = None,
@@ -31,12 +31,12 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Mutating tools (registered only when not read_only) ---
     if not read_only:
-        @mcp.tool(name="endpoint_delete", description="endpoint \u00b7 DELETE /endpoint/delete \u2014 Disable instance of the object.")
+        @mcp.tool(name="endpoint_delete", description="endpoint \u00b7 DELETE /endpoint/delete \u2014 Disable instance of the object. Requires a JSON request body.")
         async def endpoint_delete(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("DELETE", "/endpoint/delete", path_params={}, query={}, body=body)
-        @mcp.tool(name="endpoint_delete_many", description="endpoint \u00b7 DELETE /endpoint/deleteMany \u2014 Disable instance of the objects.")
+        @mcp.tool(name="endpoint_delete_many", description="endpoint \u00b7 DELETE /endpoint/deleteMany \u2014 Disable instance of the objects. Required: q. Requires a JSON request body.")
         async def endpoint_delete_many(
             q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,

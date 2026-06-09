@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="organization_endpoint_group_search", description="organization_endpoint_group \u00b7 POST /organizationEndpointGroup/search \u2014 Returns events")
+    @mcp.tool(name="organization_endpoint_group_search", description="organization_endpoint_group \u00b7 POST /organizationEndpointGroup/search \u2014 Returns events Required: q, from, size.")
     async def organization_endpoint_group_search(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         sort: Annotated[str | None, Field(default=None, description="query param sort (str)")] = None,
@@ -29,7 +29,7 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("POST", "/organizationEndpointGroup/search", path_params={}, query={"q": q, "sort": sort, "group": group, "from": from_, "size": size, "includeFields": includeFields}, body=body)
 
-    @mcp.tool(name="organization_endpoint_group_search_by_fields", description="organization_endpoint_group \u00b7 POST /organizationEndpointGroup/searchByFields \u2014 Get object by connection.")
+    @mcp.tool(name="organization_endpoint_group_search_by_fields", description="organization_endpoint_group \u00b7 POST /organizationEndpointGroup/searchByFields \u2014 Get object by connection. Required: from, size, q.")
     async def organization_endpoint_group_search_by_fields(
         from_: Annotated[int | None, Field(default=None, description="query param from (int)")] = None,
         size: Annotated[int | None, Field(default=None, description="query param size (int)")] = None,
@@ -45,17 +45,17 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Mutating tools (registered only when not read_only) ---
     if not read_only:
-        @mcp.tool(name="organization_endpoint_group_delete", description="organization_endpoint_group \u00b7 DELETE /organizationEndpointGroup/delete \u2014 Disable instance of the object.")
+        @mcp.tool(name="organization_endpoint_group_delete", description="organization_endpoint_group \u00b7 DELETE /organizationEndpointGroup/delete \u2014 Disable instance of the object. Requires a JSON request body.")
         async def organization_endpoint_group_delete(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("DELETE", "/organizationEndpointGroup/delete", path_params={}, query={}, body=body)
-        @mcp.tool(name="organization_endpoint_group_insert", description="organization_endpoint_group \u00b7 PUT /organizationEndpointGroup/insert \u2014 insert instance of the object")
+        @mcp.tool(name="organization_endpoint_group_insert", description="organization_endpoint_group \u00b7 PUT /organizationEndpointGroup/insert \u2014 insert instance of the object Requires a JSON request body.")
         async def organization_endpoint_group_insert(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("PUT", "/organizationEndpointGroup/insert", path_params={}, query={}, body=body)
-        @mcp.tool(name="organization_endpoint_group_update", description="organization_endpoint_group \u00b7 POST /organizationEndpointGroup/update \u2014 Update instance of the object")
+        @mcp.tool(name="organization_endpoint_group_update", description="organization_endpoint_group \u00b7 POST /organizationEndpointGroup/update \u2014 Update instance of the object Requires a JSON request body.")
         async def organization_endpoint_group_update(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:

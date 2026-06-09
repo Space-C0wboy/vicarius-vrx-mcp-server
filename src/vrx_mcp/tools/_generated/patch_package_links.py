@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="patch_package_links_search_by_fields", description="patch_package_links \u00b7 POST /patchPackageLinks/searchByFields \u2014 Get object by connection.")
+    @mcp.tool(name="patch_package_links_search_by_fields", description="patch_package_links \u00b7 POST /patchPackageLinks/searchByFields \u2014 Get object by connection. Required: from, size, q.")
     async def patch_package_links_search_by_fields(
         from_: Annotated[int | None, Field(default=None, description="query param from (int)")] = None,
         size: Annotated[int | None, Field(default=None, description="query param size (int)")] = None,

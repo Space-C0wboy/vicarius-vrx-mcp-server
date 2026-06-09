@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="patch_management_patch", description="List patches. REQUIRED: `softwareType` \u2014 must be 'APP' or 'OS'. Also accepts `searchQueries` (array of join filters), `q` (RSQL), and `from`/`size`. Results are in serverResponseObject.")
+    @mcp.tool(name="patch_management_patch", description="patch_management \u00b7 GET /patchManagement/patch \u2014 Returns list of patches Required: searchQueries, softwareType. Allowed values: softwareType=APP|OS.")
     async def patch_management_patch(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         searchQueries: Annotated[Any | None, Field(default=None, description="query param searchQueries (Any)")] = None,
@@ -29,7 +29,7 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("GET", "/patchManagement/patch", path_params={}, query={"q": q, "searchQueries": searchQueries, "from": from_, "size": size, "patchIds": patchIds, "externalPatchIds": externalPatchIds, "softwareType": softwareType}, body=None)
 
-    @mcp.tool(name="patch_management_patch_1", description="List patches (POST form). REQUIRED: `softwareType` \u2014 must be 'APP' or 'OS'. Also accepts `searchQueries`/`body` join filters, `q` (RSQL), and `from`/`size`.")
+    @mcp.tool(name="patch_management_patch_1", description="patch_management \u00b7 POST /patchManagement/patch \u2014 Returns list of patches Required: softwareType. Allowed values: softwareType=APP|OS.")
     async def patch_management_patch_1(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         from_: Annotated[int | None, Field(default=None, description="query param from (int)")] = None,
@@ -41,7 +41,7 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("POST", "/patchManagement/patch", path_params={}, query={"q": q, "from": from_, "size": size, "patchIds": patchIds, "externalPatchIds": externalPatchIds, "softwareType": softwareType}, body=body)
 
-    @mcp.tool(name="patch_management_cve_info", description="patch_management \u00b7 GET /patchManagement/patch/{patchId}/cveInfo \u2014 Returns CVE info for a specific patch")
+    @mcp.tool(name="patch_management_cve_info", description="patch_management \u00b7 GET /patchManagement/patch/{patchId}/cveInfo \u2014 Returns CVE info for a specific patch Required: patchId, source. Allowed values: source=XPATCH|VICARIUS.")
     async def patch_management_cve_info(
         patchId: Annotated[int, Field(description="path param patchId")],
         source: Annotated[str | None, Field(default=None, description="query param source (str)")] = None,

@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="user_invitation_search", description="user_invitation \u00b7 POST /userInvitation/search \u2014 Returns events")
+    @mcp.tool(name="user_invitation_search", description="user_invitation \u00b7 POST /userInvitation/search \u2014 Returns events Required: q, from, size.")
     async def user_invitation_search(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         sort: Annotated[str | None, Field(default=None, description="query param sort (str)")] = None,
@@ -29,7 +29,7 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("POST", "/userInvitation/search", path_params={}, query={"q": q, "sort": sort, "group": group, "from": from_, "size": size, "includeFields": includeFields}, body=body)
 
-    @mcp.tool(name="user_invitation_search_by_fields", description="user_invitation \u00b7 POST /userInvitation/searchByFields \u2014 Get object by connection.")
+    @mcp.tool(name="user_invitation_search_by_fields", description="user_invitation \u00b7 POST /userInvitation/searchByFields \u2014 Get object by connection. Required: from, size, q.")
     async def user_invitation_search_by_fields(
         from_: Annotated[int | None, Field(default=None, description="query param from (int)")] = None,
         size: Annotated[int | None, Field(default=None, description="query param size (int)")] = None,
@@ -45,27 +45,27 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Mutating tools (registered only when not read_only) ---
     if not read_only:
-        @mcp.tool(name="user_invitation_delete", description="user_invitation \u00b7 DELETE /userInvitation/delete \u2014 Disable instance of the object.")
+        @mcp.tool(name="user_invitation_delete", description="user_invitation \u00b7 DELETE /userInvitation/delete \u2014 Disable instance of the object. Requires a JSON request body.")
         async def user_invitation_delete(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("DELETE", "/userInvitation/delete", path_params={}, query={}, body=body)
-        @mcp.tool(name="user_invitation_insert", description="user_invitation \u00b7 PUT /userInvitation/insert \u2014 insert instance of the object")
+        @mcp.tool(name="user_invitation_insert", description="user_invitation \u00b7 PUT /userInvitation/insert \u2014 insert instance of the object Requires a JSON request body.")
         async def user_invitation_insert(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("PUT", "/userInvitation/insert", path_params={}, query={}, body=body)
-        @mcp.tool(name="user_invitation_insert_many", description="user_invitation \u00b7 PUT /userInvitation/insertMany \u2014 Insert instance of the object")
+        @mcp.tool(name="user_invitation_insert_many", description="user_invitation \u00b7 PUT /userInvitation/insertMany \u2014 Insert instance of the object Requires a JSON request body.")
         async def user_invitation_insert_many(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("PUT", "/userInvitation/insertMany", path_params={}, query={}, body=body)
-        @mcp.tool(name="user_invitation_resend", description="user_invitation \u00b7 POST /userInvitation/resend \u2014 Resend invitation")
+        @mcp.tool(name="user_invitation_resend", description="user_invitation \u00b7 POST /userInvitation/resend \u2014 Resend invitation Requires a JSON request body.")
         async def user_invitation_resend(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("POST", "/userInvitation/resend", path_params={}, query={}, body=body)
-        @mcp.tool(name="user_invitation_update", description="user_invitation \u00b7 POST /userInvitation/update \u2014 Update instance of the object")
+        @mcp.tool(name="user_invitation_update", description="user_invitation \u00b7 POST /userInvitation/update \u2014 Update instance of the object Requires a JSON request body.")
         async def user_invitation_update(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:

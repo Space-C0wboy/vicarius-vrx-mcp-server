@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="automation_search", description="automation \u00b7 POST /automation/search \u2014 Returns events")
+    @mcp.tool(name="automation_search", description="automation \u00b7 POST /automation/search \u2014 Returns events Required: q, from, size.")
     async def automation_search(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         sort: Annotated[str | None, Field(default=None, description="query param sort (str)")] = None,
@@ -29,7 +29,7 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("POST", "/automation/search", path_params={}, query={"q": q, "sort": sort, "group": group, "from": from_, "size": size, "includeFields": includeFields}, body=body)
 
-    @mcp.tool(name="automation_search_all", description="automation \u00b7 POST /automation/searchAll \u2014 Returns events")
+    @mcp.tool(name="automation_search_all", description="automation \u00b7 POST /automation/searchAll \u2014 Returns events Required: q, from, size.")
     async def automation_search_all(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         sort: Annotated[str | None, Field(default=None, description="query param sort (str)")] = None,
@@ -41,7 +41,7 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("POST", "/automation/searchAll", path_params={}, query={"q": q, "sort": sort, "group": group, "from": from_, "size": size, "includeFields": includeFields}, body=body)
 
-    @mcp.tool(name="automation_search_by_fields", description="automation \u00b7 POST /automation/searchByFields \u2014 Get object by connection.")
+    @mcp.tool(name="automation_search_by_fields", description="automation \u00b7 POST /automation/searchByFields \u2014 Get object by connection. Required: from, size, q.")
     async def automation_search_by_fields(
         from_: Annotated[int | None, Field(default=None, description="query param from (int)")] = None,
         size: Annotated[int | None, Field(default=None, description="query param size (int)")] = None,
@@ -57,17 +57,17 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Mutating tools (registered only when not read_only) ---
     if not read_only:
-        @mcp.tool(name="automation_delete", description="automation \u00b7 DELETE /automation/delete \u2014 Disable instance of the object.")
+        @mcp.tool(name="automation_delete", description="automation \u00b7 DELETE /automation/delete \u2014 Disable instance of the object. Requires a JSON request body.")
         async def automation_delete(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("DELETE", "/automation/delete", path_params={}, query={}, body=body)
-        @mcp.tool(name="automation_insert", description="automation \u00b7 PUT /automation/insert \u2014 insert instance of the object")
+        @mcp.tool(name="automation_insert", description="automation \u00b7 PUT /automation/insert \u2014 insert instance of the object Requires a JSON request body.")
         async def automation_insert(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("PUT", "/automation/insert", path_params={}, query={}, body=body)
-        @mcp.tool(name="automation_update", description="automation \u00b7 POST /automation/update \u2014 Update instance of the object")
+        @mcp.tool(name="automation_update", description="automation \u00b7 POST /automation/update \u2014 Update instance of the object Requires a JSON request body.")
         async def automation_update(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:

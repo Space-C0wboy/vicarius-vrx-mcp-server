@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="organization_endpoint_external_reference_external_references_search", description="organization_endpoint_external_reference_external_references \u00b7 POST /organizationEndpointExternalReferenceExternalReferences/search \u2014 Returns events")
+    @mcp.tool(name="organization_endpoint_external_reference_external_references_search", description="organization_endpoint_external_reference_external_references \u00b7 POST /organizationEndpointExternalReferenceExternalReferences/search \u2014 Returns events Required: q, from, size.")
     async def organization_endpoint_external_reference_external_references_search(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         sort: Annotated[str | None, Field(default=None, description="query param sort (str)")] = None,

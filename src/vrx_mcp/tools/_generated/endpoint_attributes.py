@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="endpoint_attributes_search", description="endpoint_attributes \u00b7 POST /endpointAttributes/search \u2014 Returns events")
+    @mcp.tool(name="endpoint_attributes_search", description="endpoint_attributes \u00b7 POST /endpointAttributes/search \u2014 Returns events Required: q, from, size.")
     async def endpoint_attributes_search(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         sort: Annotated[str | None, Field(default=None, description="query param sort (str)")] = None,
@@ -29,7 +29,7 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("POST", "/endpointAttributes/search", path_params={}, query={"q": q, "sort": sort, "group": group, "from": from_, "size": size, "includeFields": includeFields}, body=body)
 
-    @mcp.tool(name="endpoint_attributes_search_by_fields", description="endpoint_attributes \u00b7 POST /endpointAttributes/searchByFields \u2014 Get object by connection.")
+    @mcp.tool(name="endpoint_attributes_search_by_fields", description="endpoint_attributes \u00b7 POST /endpointAttributes/searchByFields \u2014 Get object by connection. Required: from, size, q.")
     async def endpoint_attributes_search_by_fields(
         from_: Annotated[int | None, Field(default=None, description="query param from (int)")] = None,
         size: Annotated[int | None, Field(default=None, description="query param size (int)")] = None,

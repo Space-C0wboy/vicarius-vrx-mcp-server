@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="operating_system_family_search_by_fields", description="operating_system_family \u00b7 POST /operatingSystemFamily/searchByFields \u2014 Get object by connection.")
+    @mcp.tool(name="operating_system_family_search_by_fields", description="operating_system_family \u00b7 POST /operatingSystemFamily/searchByFields \u2014 Get object by connection. Required: from, size, q.")
     async def operating_system_family_search_by_fields(
         from_: Annotated[int | None, Field(default=None, description="query param from (int)")] = None,
         size: Annotated[int | None, Field(default=None, description="query param size (int)")] = None,

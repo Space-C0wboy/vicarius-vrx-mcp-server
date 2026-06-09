@@ -21,18 +21,18 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Mutating tools (registered only when not read_only) ---
     if not read_only:
-        @mcp.tool(name="automation_task_templates_delete_many", description="automation_task_templates \u00b7 DELETE /automationTaskTemplates/deleteMany \u2014 Disable instance of the objects.")
+        @mcp.tool(name="automation_task_templates_delete_many", description="automation_task_templates \u00b7 DELETE /automationTaskTemplates/deleteMany \u2014 Disable instance of the objects. Required: q. Requires a JSON request body.")
         async def automation_task_templates_delete_many(
             q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("DELETE", "/automationTaskTemplates/deleteMany", path_params={}, query={"q": q}, body=body)
-        @mcp.tool(name="automation_task_templates_insert", description="automation_task_templates \u00b7 PUT /automationTaskTemplates/insert \u2014 Insert instance of the object")
+        @mcp.tool(name="automation_task_templates_insert", description="automation_task_templates \u00b7 PUT /automationTaskTemplates/insert \u2014 Insert instance of the object Requires a JSON request body.")
         async def automation_task_templates_insert(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("PUT", "/automationTaskTemplates/insert", path_params={}, query={}, body=body)
-        @mcp.tool(name="automation_task_templates_insert_many", description="automation_task_templates \u00b7 PUT /automationTaskTemplates/insertMany \u2014 Inserte instance of the object")
+        @mcp.tool(name="automation_task_templates_insert_many", description="automation_task_templates \u00b7 PUT /automationTaskTemplates/insertMany \u2014 Inserte instance of the object Requires a JSON request body.")
         async def automation_task_templates_insert_many(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:

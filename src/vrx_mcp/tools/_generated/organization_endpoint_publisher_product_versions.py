@@ -17,7 +17,7 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="organization_endpoint_publisher_product_versions_search", description="organization_endpoint_publisher_product_versions \u00b7 POST /organizationEndpointPublisherProductVersions/search \u2014 Returns events")
+    @mcp.tool(name="organization_endpoint_publisher_product_versions_search", description="organization_endpoint_publisher_product_versions \u00b7 POST /organizationEndpointPublisherProductVersions/search \u2014 Returns events Required: q, from, size.")
     async def organization_endpoint_publisher_product_versions_search(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         sort: Annotated[str | None, Field(default=None, description="query param sort (str)")] = None,

@@ -65,15 +65,6 @@ OVERRIDES: dict[str, str] = {
         "Search endpoints (assets). RSQL `q` filter, e.g. q=endpointName=='HOST01'. "
         "size<=500, from<=10000; use sort + seek paging beyond 10000."
     ),
-    "patch_management_patch": (
-        "List patches. REQUIRED: `softwareType` — must be 'APP' or 'OS'. Also accepts "
-        "`searchQueries` (array of join filters), `q` (RSQL), and `from`/`size`. "
-        "Results are in serverResponseObject."
-    ),
-    "patch_management_patch_1": (
-        "List patches (POST form). REQUIRED: `softwareType` — must be 'APP' or 'OS'. "
-        "Also accepts `searchQueries`/`body` join filters, `q` (RSQL), and `from`/`size`."
-    ),
 }
 
 # Correct any misclassified mutating/non-mutating operations: tool_name -> mutating bool.
@@ -91,6 +82,7 @@ class Operation:
     path_params: list[dict] = field(default_factory=list)
     query_params: list[dict] = field(default_factory=list)
     has_body: bool = False
+    body_required: bool = False
 
 
 @dataclass
@@ -174,6 +166,7 @@ def collect_domains(spec: dict) -> list[Domain]:
                 path_params=[x for x in params if x.get("in") == "path"],
                 query_params=[x for x in params if x.get("in") == "query"],
                 has_body="requestBody" in op,
+                body_required=bool((op.get("requestBody") or {}).get("required", False)),
             )
             raw.setdefault(module, []).append(operation)
 
@@ -206,11 +199,38 @@ def _py_default_param(py_name: str, annot: str, desc: str) -> str:
     )
 
 
+def _constraint_hints(op: Operation) -> str:
+    """Auto-derived description suffix listing API-required params and enum values.
+
+    Generated tool params are all optional in the signature (loosely typed), so the spec's
+    ``required`` flags and ``enum`` constraints would otherwise be invisible to the model.
+    This surfaces them in the description for every tool, e.g.
+    "Required: searchQueries, softwareType. Allowed values: softwareType=APP|OS."
+    """
+    all_params = op.path_params + op.query_params
+    required = [p["name"] for p in all_params if p.get("required")]
+    enums = [
+        f"{p['name']}={'|'.join(str(v) for v in (p.get('schema') or {}).get('enum'))}"
+        for p in all_params
+        if (p.get("schema") or {}).get("enum")
+    ]
+    parts: list[str] = []
+    if required:
+        parts.append("Required: " + ", ".join(required) + ".")
+    if op.body_required:
+        parts.append("Requires a JSON request body.")
+    if enums:
+        parts.append("Allowed values: " + "; ".join(enums) + ".")
+    return " ".join(parts)
+
+
 def _emit_tool(op: Operation) -> str:
     lines: list[str] = []
-    desc = OVERRIDES.get(
+    base = OVERRIDES.get(
         op.tool_name, f"{op.domain} · {op.method} {op.path} — {op.summary}".strip(" —")
     )
+    hints = _constraint_hints(op)
+    desc = f"{base} {hints}".strip() if hints else base
     lines.append(f'    @mcp.tool(name={json.dumps(op.tool_name)}, description={json.dumps(desc)})')
     sig = [f"    async def {op.tool_name}("]
 

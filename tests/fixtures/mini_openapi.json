@@ -54,7 +54,8 @@
         "operationId": "getAttrs",
         "parameters": [
           { "name": "endpointId", "in": "path", "required": true, "schema": { "type": "integer" } },
-          { "name": "enabled", "in": "query", "required": false, "schema": { "type": "boolean" } }
+          { "name": "enabled", "in": "query", "required": false, "schema": { "type": "boolean" } },
+          { "name": "softwareType", "in": "query", "required": true, "schema": { "type": "string", "enum": ["APP", "OS"] } }
         ]
       }
     },

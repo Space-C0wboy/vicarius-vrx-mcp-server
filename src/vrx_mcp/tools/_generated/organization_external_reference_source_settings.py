@@ -21,17 +21,17 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Mutating tools (registered only when not read_only) ---
     if not read_only:
-        @mcp.tool(name="organization_external_reference_source_settings_delete", description="organization_external_reference_source_settings \u00b7 DELETE /organizationExternalReferenceSourceSettings/delete \u2014 Disable instance of the object.")
+        @mcp.tool(name="organization_external_reference_source_settings_delete", description="organization_external_reference_source_settings \u00b7 DELETE /organizationExternalReferenceSourceSettings/delete \u2014 Disable instance of the object. Requires a JSON request body.")
         async def organization_external_reference_source_settings_delete(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("DELETE", "/organizationExternalReferenceSourceSettings/delete", path_params={}, query={}, body=body)
-        @mcp.tool(name="organization_external_reference_source_settings_insert", description="organization_external_reference_source_settings \u00b7 PUT /organizationExternalReferenceSourceSettings/insert \u2014 insert instance of the object")
+        @mcp.tool(name="organization_external_reference_source_settings_insert", description="organization_external_reference_source_settings \u00b7 PUT /organizationExternalReferenceSourceSettings/insert \u2014 insert instance of the object Requires a JSON request body.")
         async def organization_external_reference_source_settings_insert(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
             return await execute_request("PUT", "/organizationExternalReferenceSourceSettings/insert", path_params={}, query={}, body=body)
-        @mcp.tool(name="organization_external_reference_source_settings_update", description="organization_external_reference_source_settings \u00b7 POST /organizationExternalReferenceSourceSettings/update \u2014 Update instance of the object")
+        @mcp.tool(name="organization_external_reference_source_settings_update", description="organization_external_reference_source_settings \u00b7 POST /organizationExternalReferenceSourceSettings/update \u2014 Update instance of the object Requires a JSON request body.")
         async def organization_external_reference_source_settings_update(
             body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
         ) -> Any:
