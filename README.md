@@ -238,6 +238,41 @@ Key generator behavior:
 
 CI runs ruff + pytest on Python 3.10 / 3.11 / 3.12 (see `.github/workflows/ci.yml`).
 
+## Releasing (PyPI)
+
+Publishing is automated via `.github/workflows/release.yml` using **PyPI Trusted
+Publishing (OIDC)** — no API token is stored. The workflow builds the sdist/wheel, runs
+`twine check`, and publishes when a **GitHub Release is published**.
+
+**One-time setup (PyPI side):**
+1. On [PyPI](https://pypi.org/manage/account/publishing/), add a **Trusted Publisher**.
+   Because the project doesn't exist on PyPI yet, add it as a *pending* publisher:
+   - PyPI Project Name: `vrx-mcp`
+   - Owner: `Space-C0wboy`
+   - Repository: `vicarius-vrx-mcp-server`
+   - Workflow filename: `release.yml`
+   - Environment name: `pypi`
+2. In GitHub repo **Settings → Environments**, create an environment named `pypi`
+   (optionally add required-reviewer protection for a manual approval gate).
+
+**Cutting a release:**
+1. Bump the version in `pyproject.toml` and `src/vrx_mcp/__init__.py`, update
+   `CHANGELOG.md`, commit.
+2. Tag and push: `git tag v0.1.0 && git push origin v0.1.0`.
+3. Create a GitHub Release for that tag. Publishing the Release triggers the workflow,
+   which uploads to PyPI.
+
+> [!NOTE]
+> Publishing to public PyPI makes the package source publicly downloadable, even though
+> this GitHub repository is private. Use a private index instead if the code must stay
+> internal.
+
+Build locally to sanity-check before releasing:
+
+```bash
+.venv/Scripts/python -m build && .venv/Scripts/python -m twine check dist/*
+```
+
 ## License
 
 [MIT](LICENSE)
