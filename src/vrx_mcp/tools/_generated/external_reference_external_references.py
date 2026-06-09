@@ -31,14 +31,12 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("POST", "/externalReferenceExternalReferences/searchByFields", path_params={}, query={"from": from_, "size": size, "enabled": enabled, "addCount": addCount, "q": q, "sort": sort, "groupBy": groupBy, "includeFields": includeFields}, body=body)
 
-    # --- Mutating tools (registered only when not read_only) ---
-    if not read_only:
-        @mcp.tool(name="external_reference_external_references_search_by_objects", description="external_reference_external_references \u00b7 POST /externalReferenceExternalReferences/searchByObjects \u2014 Get object by connection.")
-        async def external_reference_external_references_search_by_objects(
-            enabled: Annotated[bool | None, Field(default=None, description="query param enabled (bool)")] = None,
-            from_: Annotated[int | None, Field(default=None, description="query param from (int)")] = None,
-            size: Annotated[int | None, Field(default=None, description="query param size (int)")] = None,
-            q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
-            body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
-        ) -> Any:
-            return await execute_request("POST", "/externalReferenceExternalReferences/searchByObjects", path_params={}, query={"enabled": enabled, "from": from_, "size": size, "q": q}, body=body)
+    @mcp.tool(name="external_reference_external_references_search_by_objects", description="external_reference_external_references \u00b7 POST /externalReferenceExternalReferences/searchByObjects \u2014 Get object by connection.")
+    async def external_reference_external_references_search_by_objects(
+        enabled: Annotated[bool | None, Field(default=None, description="query param enabled (bool)")] = None,
+        from_: Annotated[int | None, Field(default=None, description="query param from (int)")] = None,
+        size: Annotated[int | None, Field(default=None, description="query param size (int)")] = None,
+        q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
+        body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
+    ) -> Any:
+        return await execute_request("POST", "/externalReferenceExternalReferences/searchByObjects", path_params={}, query={"enabled": enabled, "from": from_, "size": size, "q": q}, body=body)

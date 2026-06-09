@@ -42,17 +42,17 @@ API surface, and the generated output is deterministic and committed.
 
 ## Tools
 
-**88 tools across 37 API controllers** (52 read + 36 mutating), plus the `vrx_request` escape
-hatch — **89 total in full mode, 53 in read-only mode** (mutating tools are not registered when
+**88 tools across 37 API controllers** (59 read + 29 mutating), plus the `vrx_request` escape
+hatch — **89 total in full mode, 60 in read-only mode** (mutating tools are not registered when
 read-only). The table below groups the controllers into functional domains.
 
 | Domain | Read | Write | Notable tools |
 |--------|:----:|:-----:|---------------|
-| **Vulnerabilities & CVEs** | 8 | 1 | `vulnerability_search`, `vulnerability_count`, `endpoint_vulnerability_filter`, `organization_endpoint_vulnerabilities_search`, `vulnerability_attack_vectors_search_by_fields`, `vulnerability_links_search_by_fields` |
+| **Vulnerabilities & CVEs** | 9 | 0 | `vulnerability_search`, `vulnerability_count`, `endpoint_vulnerability_filter`, `organization_endpoint_vulnerabilities_search`, `vulnerability_attack_vectors_search_by_fields`, `vulnerability_links_search_by_fields` |
 | **Endpoints (Assets)** | 7 | 5 | `endpoint_search`, `endpoint_attributes_search`, `organization_endpoint_group_search`, `aggregation_search_group`, `endpoint_delete`, `organization_endpoint_group_insert` |
-| **Patches & Updates** | 8 | 6 | `patch_management_patch`, `patch_management_cve_info`, `organization_endpoint_patch_patch_packages_filter`, `organization_endpoint_external_reference_external_references_search`, `patch_package_search_by_fields` |
+| **Patches & Updates** | 11 | 3 | `patch_management_patch`, `patch_management_cve_info`, `organization_endpoint_patch_patch_packages_filter`, `organization_endpoint_external_reference_external_references_search`, `patch_package_search_by_fields` |
 | **Publishers, Products & OS** | 9 | 0 | `organization_publisher_products_search`, `organization_endpoint_publisher_product_versions_search`, `organization_publisher_operating_systems_search`, `operating_system_family_search_by_fields` |
-| **Tasks & Events** | 7 | 10 | `task_event_filter`, `task_endpoints_event_filter`, `incident_event_filter`, `task_update`, `task_template_insert`, `automation_task_templates_insert` |
+| **Tasks & Events** | 10 | 7 | `task_event_filter`, `task_endpoints_event_filter`, `incident_event_filter`, `task_update`, `task_template_insert`, `automation_task_templates_insert` |
 | **Automations & Scripts** | 9 | 9 | `automation_search`, `automations_automations`, `script_template_search`, `organization_scan_input_search`, `automation_delete`, `organization_scan_input_update` |
 | **Users & Invitations** | 3 | 5 | `user_search`, `user_invitation_search`, `user_invitation_insert`, `user_invitation_update`, `user_invitation_delete` |
 | **Utilities** | 1 | 0 | `date_get_current_date` |
@@ -146,7 +146,7 @@ header.
 
 Set `VRX_READ_ONLY=true` to run the server safely against production. In this mode:
 
-- **No mutating tools are registered** — only the 52 read tools (+ `vrx_request`) are exposed.
+- **No mutating tools are registered** — only the 59 read tools (+ `vrx_request`) are exposed.
 - **`vrx_request` rejects any non-GET method**, so it can only run read operations.
 
 Read-only mode is strongly recommended for analyst-assistant, reporting, and dashboard use

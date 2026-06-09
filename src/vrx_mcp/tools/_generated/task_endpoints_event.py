@@ -25,6 +25,14 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("GET", "/taskEndpointsEvent/count", path_params={}, query={"q": q, "analyticsEventAction": analyticsEventAction, "searchQuerys": searchQuerys}, body=None)
 
+    @mcp.tool(name="task_endpoints_event_count_1", description="task_endpoints_event \u00b7 POST /taskEndpointsEvent/count \u2014 Count objects by stuff.")
+    async def task_endpoints_event_count_1(
+        q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
+        analyticsEventAction: Annotated[str | None, Field(default=None, description="query param analyticsEventAction (str)")] = None,
+        body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
+    ) -> Any:
+        return await execute_request("POST", "/taskEndpointsEvent/count", path_params={}, query={"q": q, "analyticsEventAction": analyticsEventAction}, body=body)
+
     @mcp.tool(name="task_endpoints_event_filter", description="task_endpoints_event \u00b7 POST /taskEndpointsEvent/filter \u2014 Returns events")
     async def task_endpoints_event_filter(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
@@ -44,13 +52,3 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     async def task_endpoints_event_task_types(
     ) -> Any:
         return await execute_request("GET", "/taskEndpointsEvent/taskTypes", path_params={}, query={}, body=None)
-
-    # --- Mutating tools (registered only when not read_only) ---
-    if not read_only:
-        @mcp.tool(name="task_endpoints_event_count_1", description="task_endpoints_event \u00b7 POST /taskEndpointsEvent/count \u2014 Count objects by stuff.")
-        async def task_endpoints_event_count_1(
-            q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
-            analyticsEventAction: Annotated[str | None, Field(default=None, description="query param analyticsEventAction (str)")] = None,
-            body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
-        ) -> Any:
-            return await execute_request("POST", "/taskEndpointsEvent/count", path_params={}, query={"q": q, "analyticsEventAction": analyticsEventAction}, body=body)

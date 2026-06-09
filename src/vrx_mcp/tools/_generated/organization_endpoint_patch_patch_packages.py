@@ -25,6 +25,14 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
     ) -> Any:
         return await execute_request("GET", "/organizationEndpointPatchPatchPackages/count", path_params={}, query={"q": q, "analyticsEventAction": analyticsEventAction, "searchQuerys": searchQuerys}, body=None)
 
+    @mcp.tool(name="organization_endpoint_patch_patch_packages_count_1", description="organization_endpoint_patch_patch_packages \u00b7 POST /organizationEndpointPatchPatchPackages/count \u2014 Count objects by stuff.")
+    async def organization_endpoint_patch_patch_packages_count_1(
+        q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
+        analyticsEventAction: Annotated[str | None, Field(default=None, description="query param analyticsEventAction (str)")] = None,
+        body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
+    ) -> Any:
+        return await execute_request("POST", "/organizationEndpointPatchPatchPackages/count", path_params={}, query={"q": q, "analyticsEventAction": analyticsEventAction}, body=body)
+
     @mcp.tool(name="organization_endpoint_patch_patch_packages_filter", description="organization_endpoint_patch_patch_packages \u00b7 POST /organizationEndpointPatchPatchPackages/filter \u2014 Returns events")
     async def organization_endpoint_patch_patch_packages_filter(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
@@ -39,13 +47,3 @@ def register(mcp: FastMCP, *, read_only: bool) -> None:
         body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
     ) -> Any:
         return await execute_request("POST", "/organizationEndpointPatchPatchPackages/filter", path_params={}, query={"q": q, "sort": sort, "analyticsEventAction": analyticsEventAction, "excludeFields": excludeFields, "includeFields": includeFields, "includeOriginalDoc": includeOriginalDoc, "getLegacyData": getLegacyData, "from": from_, "size": size}, body=body)
-
-    # --- Mutating tools (registered only when not read_only) ---
-    if not read_only:
-        @mcp.tool(name="organization_endpoint_patch_patch_packages_count_1", description="organization_endpoint_patch_patch_packages \u00b7 POST /organizationEndpointPatchPatchPackages/count \u2014 Count objects by stuff.")
-        async def organization_endpoint_patch_patch_packages_count_1(
-            q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
-            analyticsEventAction: Annotated[str | None, Field(default=None, description="query param analyticsEventAction (str)")] = None,
-            body: Annotated[Any | None, Field(default=None, description="JSON request body")] = None,
-        ) -> Any:
-            return await execute_request("POST", "/organizationEndpointPatchPatchPackages/count", path_params={}, query={"q": q, "analyticsEventAction": analyticsEventAction}, body=body)

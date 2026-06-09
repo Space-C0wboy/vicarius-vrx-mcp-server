@@ -25,12 +25,12 @@
 | `endpoint_attributes_search` | POST | `/endpointAttributes/search` | no |
 | `endpoint_attributes_search_by_fields` | POST | `/endpointAttributes/searchByFields` | no |
 | `endpoint_vulnerability_count` | GET | `/endpointVulnerability/count` | no |
-| `endpoint_vulnerability_count_1` | POST | `/endpointVulnerability/count` | yes |
+| `endpoint_vulnerability_count_1` | POST | `/endpointVulnerability/count` | no |
 | `endpoint_vulnerability_filter` | POST | `/endpointVulnerability/filter` | no |
 | `external_reference_external_references_search_by_fields` | POST | `/externalReferenceExternalReferences/searchByFields` | no |
-| `external_reference_external_references_search_by_objects` | POST | `/externalReferenceExternalReferences/searchByObjects` | yes |
+| `external_reference_external_references_search_by_objects` | POST | `/externalReferenceExternalReferences/searchByObjects` | no |
 | `incident_event_count` | GET | `/incidentEvent/count` | no |
-| `incident_event_count_1` | POST | `/incidentEvent/count` | yes |
+| `incident_event_count_1` | POST | `/incidentEvent/count` | no |
 | `incident_event_filter` | POST | `/incidentEvent/filter` | no |
 | `operating_system_family_search_by_fields` | POST | `/operatingSystemFamily/searchByFields` | no |
 | `organization_endpoint_external_reference_external_references_search` | POST | `/organizationEndpointExternalReferenceExternalReferences/search` | no |
@@ -40,7 +40,7 @@
 | `organization_endpoint_group_search_by_fields` | POST | `/organizationEndpointGroup/searchByFields` | no |
 | `organization_endpoint_group_update` | POST | `/organizationEndpointGroup/update` | yes |
 | `organization_endpoint_patch_patch_packages_count` | GET | `/organizationEndpointPatchPatchPackages/count` | no |
-| `organization_endpoint_patch_patch_packages_count_1` | POST | `/organizationEndpointPatchPatchPackages/count` | yes |
+| `organization_endpoint_patch_patch_packages_count_1` | POST | `/organizationEndpointPatchPatchPackages/count` | no |
 | `organization_endpoint_patch_patch_packages_filter` | POST | `/organizationEndpointPatchPatchPackages/filter` | no |
 | `organization_endpoint_publisher_operating_systems_locate_object_position` | GET | `/organizationEndpointPublisherOperatingSystems/locateObjectPosition` | no |
 | `organization_endpoint_publisher_operating_systems_search` | POST | `/organizationEndpointPublisherOperatingSystems/search` | no |
@@ -59,7 +59,7 @@
 | `organization_scan_input_update` | POST | `/organizationScanInput/update` | yes |
 | `organization_scan_input_upload` | PUT | `/organizationScanInput/upload` | yes |
 | `patch_management_patch` | GET | `/patchManagement/patch` | no |
-| `patch_management_patch_1` | POST | `/patchManagement/patch` | yes |
+| `patch_management_patch_1` | POST | `/patchManagement/patch` | no |
 | `patch_management_cve_info` | GET | `/patchManagement/patch/{patchId}/cveInfo` | no |
 | `patch_package_search_by_fields` | POST | `/patchPackage/searchByFields` | no |
 | `patch_package_links_search_by_fields` | POST | `/patchPackageLinks/searchByFields` | no |
@@ -68,11 +68,11 @@
 | `script_template_commands_search_by_fields` | POST | `/scriptTemplateCommands/searchByFields` | no |
 | `task_update` | POST | `/task/update` | yes |
 | `task_endpoints_event_count` | GET | `/taskEndpointsEvent/count` | no |
-| `task_endpoints_event_count_1` | POST | `/taskEndpointsEvent/count` | yes |
+| `task_endpoints_event_count_1` | POST | `/taskEndpointsEvent/count` | no |
 | `task_endpoints_event_filter` | POST | `/taskEndpointsEvent/filter` | no |
 | `task_endpoints_event_task_types` | GET | `/taskEndpointsEvent/taskTypes` | no |
 | `task_event_count` | GET | `/taskEvent/count` | no |
-| `task_event_count_1` | POST | `/taskEvent/count` | yes |
+| `task_event_count_1` | POST | `/taskEvent/count` | no |
 | `task_event_filter` | POST | `/taskEvent/filter` | no |
 | `task_template_insert` | PUT | `/taskTemplate/insert` | yes |
 | `task_template_insert_many` | PUT | `/taskTemplate/insertMany` | yes |
