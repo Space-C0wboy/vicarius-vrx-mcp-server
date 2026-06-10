@@ -33,7 +33,7 @@
 | `incident_event_count_1` | POST | `/incidentEvent/count` | no |
 | `incident_event_filter` | POST | `/incidentEvent/filter` | no |
 | `operating_system_family_search_by_fields` | POST | `/operatingSystemFamily/searchByFields` | no |
-| `organization_endpoint_external_reference_external_references_search` | POST | `/organizationEndpointExternalReferenceExternalReferences/search` | no |
+| `org_endpoint_external_references_search` | POST | `/organizationEndpointExternalReferenceExternalReferences/search` | no |
 | `organization_endpoint_group_delete` | DELETE | `/organizationEndpointGroup/delete` | yes |
 | `organization_endpoint_group_insert` | PUT | `/organizationEndpointGroup/insert` | yes |
 | `organization_endpoint_group_search` | POST | `/organizationEndpointGroup/search` | no |
@@ -42,7 +42,7 @@
 | `organization_endpoint_patch_patch_packages_count` | GET | `/organizationEndpointPatchPatchPackages/count` | no |
 | `organization_endpoint_patch_patch_packages_count_1` | POST | `/organizationEndpointPatchPatchPackages/count` | no |
 | `organization_endpoint_patch_patch_packages_filter` | POST | `/organizationEndpointPatchPatchPackages/filter` | no |
-| `organization_endpoint_publisher_operating_systems_locate_object_position` | GET | `/organizationEndpointPublisherOperatingSystems/locateObjectPosition` | no |
+| `org_endpoint_publisher_os_locate_position` | GET | `/organizationEndpointPublisherOperatingSystems/locateObjectPosition` | no |
 | `organization_endpoint_publisher_operating_systems_search` | POST | `/organizationEndpointPublisherOperatingSystems/search` | no |
 | `organization_endpoint_publisher_product_versions_search` | POST | `/organizationEndpointPublisherProductVersions/search` | no |
 | `organization_endpoint_vulnerabilities_search` | POST | `/organizationEndpointVulnerabilities/search` | no |

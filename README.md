@@ -51,7 +51,7 @@ read-only). The table below groups the controllers into functional domains.
 |--------|:----:|:-----:|---------------|
 | **Vulnerabilities & CVEs** | 9 | 0 | `vulnerability_search`, `vulnerability_count`, `endpoint_vulnerability_filter`, `organization_endpoint_vulnerabilities_search`, `vulnerability_attack_vectors_search_by_fields`, `vulnerability_links_search_by_fields` |
 | **Endpoints (Assets)** | 7 | 5 | `endpoint_search`, `endpoint_attributes_search`, `organization_endpoint_group_search`, `aggregation_search_group`, `endpoint_delete`, `organization_endpoint_group_insert` |
-| **Patches & Updates** | 11 | 3 | `patch_management_patch`, `patch_management_cve_info`, `organization_endpoint_patch_patch_packages_filter`, `organization_endpoint_external_reference_external_references_search`, `patch_package_search_by_fields` |
+| **Patches & Updates** | 11 | 3 | `patch_management_patch`, `patch_management_cve_info`, `organization_endpoint_patch_patch_packages_filter`, `org_endpoint_external_references_search`, `patch_package_search_by_fields` |
 | **Publishers, Products & OS** | 9 | 0 | `organization_publisher_products_search`, `organization_endpoint_publisher_product_versions_search`, `organization_publisher_operating_systems_search`, `operating_system_family_search_by_fields` |
 | **Tasks & Events** | 10 | 7 | `task_event_filter`, `task_endpoints_event_filter`, `incident_event_filter`, `task_update`, `task_template_insert`, `automation_task_templates_insert` |
 | **Automations & Scripts** | 9 | 9 | `automation_search`, `automations_automations`, `script_template_search`, `organization_scan_input_search`, `automation_delete`, `organization_scan_input_update` |
@@ -204,7 +204,7 @@ Restart Claude Desktop, then confirm `vrx` appears in the tools menu.
 - *"Which assets are affected by CVE-2024-3094?"* → `vulnerability_search` to resolve the CVE,
   then `endpoint_search` with a `searchQuerys` join body on `OrganizationEndpointVulnerabilities`.
 - *"List endpoints with critical missing patches."* →
-  `organization_endpoint_external_reference_external_references_search`
+  `org_endpoint_external_references_search`
   (`q=...patchSensitivityLevel.sensitivityLevelName=='Critical'`).
 - *"Get attack vectors and links for a vulnerability."* → `vulnerability_attack_vectors_search_by_fields`
   / `vulnerability_links_search_by_fields` (`q=vulnerabilityId==<id>`).

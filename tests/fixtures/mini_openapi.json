@@ -68,6 +68,14 @@
           "content": { "application/json": { "schema": { "type": "object" } } }
         }
       }
+    },
+    "/vulnerability/locateObjectPositionWithSomeExtraPaddingToExceedLimit": {
+      "get": {
+        "tags": ["vulnerability-controller-impl"],
+        "summary": "A deliberately long operation to exceed the 64-char tool-name limit",
+        "operationId": "longName",
+        "parameters": []
+      }
     }
   }
 }

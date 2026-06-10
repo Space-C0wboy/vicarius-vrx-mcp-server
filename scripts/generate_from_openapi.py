@@ -10,6 +10,7 @@ Usage:
 
 from __future__ import annotations
 
+import hashlib
 import json
 import keyword
 import re
@@ -69,6 +70,29 @@ OVERRIDES: dict[str, str] = {
 
 # Correct any misclassified mutating/non-mutating operations: tool_name -> mutating bool.
 MUTATING_OVERRIDES: dict[str, bool] = {}
+
+# MCP tool names must be <= 64 characters. A few generated names exceed that; map them to
+# readable short names here. Any unmapped over-limit name falls back to deterministic
+# truncation (_fit_tool_name), so generation can never emit an invalid name.
+_MAX_TOOL_NAME = 64
+TOOL_NAME_OVERRIDES: dict[str, str] = {
+    "organization_endpoint_external_reference_external_references_search": "org_endpoint_external_references_search",
+    "organization_endpoint_publisher_operating_systems_locate_object_position": "org_endpoint_publisher_os_locate_position",
+}
+
+
+def _fit_tool_name(name: str) -> str:
+    """Return a tool name <= _MAX_TOOL_NAME chars (MCP limit), deterministically.
+
+    Prefers a hand-picked short name from TOOL_NAME_OVERRIDES; otherwise truncates and
+    appends a short hash of the original so the result stays unique and stable.
+    """
+    if name in TOOL_NAME_OVERRIDES:
+        return TOOL_NAME_OVERRIDES[name]
+    if len(name) <= _MAX_TOOL_NAME:
+        return name
+    digest = hashlib.md5(name.encode()).hexdigest()[:6]
+    return name[: _MAX_TOOL_NAME - 7].rstrip("_") + "_" + digest
 
 
 @dataclass
@@ -184,6 +208,17 @@ def collect_domains(spec: dict) -> list[Domain]:
         for o in ops:
             if o.tool_name in MUTATING_OVERRIDES:
                 o.mutating = MUTATING_OVERRIDES[o.tool_name]
+        # Enforce the MCP 64-char tool-name limit, keeping names unique within the domain.
+        fitted_seen: set[str] = set()
+        for o in ops:
+            fitted = _fit_tool_name(o.tool_name)
+            n = 1
+            while fitted in fitted_seen:
+                suffix = f"_{n}"
+                fitted = fitted[: _MAX_TOOL_NAME - len(suffix)] + suffix
+                n += 1
+            fitted_seen.add(fitted)
+            o.tool_name = fitted
         domains.append(Domain(module_name=module, operations=ops))
     return domains
 

@@ -17,8 +17,8 @@ from .._common import execute_request
 def register(mcp: FastMCP, *, read_only: bool) -> None:
 
     # --- Non-mutating tools (always registered) ---
-    @mcp.tool(name="organization_endpoint_publisher_operating_systems_locate_object_position", description="organization_endpoint_publisher_operating_systems \u00b7 GET /organizationEndpointPublisherOperatingSystems/locateObjectPosition \u2014 Returns events Required: q, positionQuery.")
-    async def organization_endpoint_publisher_operating_systems_locate_object_position(
+    @mcp.tool(name="org_endpoint_publisher_os_locate_position", description="organization_endpoint_publisher_operating_systems \u00b7 GET /organizationEndpointPublisherOperatingSystems/locateObjectPosition \u2014 Returns events Required: q, positionQuery.")
+    async def org_endpoint_publisher_os_locate_position(
         q: Annotated[str | None, Field(default=None, description="query param q (str)")] = None,
         positionQuery: Annotated[str | None, Field(default=None, description="query param positionQuery (str)")] = None,
         sort: Annotated[str | None, Field(default=None, description="query param sort (str)")] = None,
