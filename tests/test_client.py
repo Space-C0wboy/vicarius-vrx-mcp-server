@@ -33,7 +33,7 @@ async def test_get_returns_json_and_sends_auth_header():
     async with _client(handler) as c:
         data = await c.request("GET", "/endpoint/search", params={"from": 0, "size": 10})
     assert data == {"ok": True}
-    assert seen["auth"] == "secret"
+    assert seen["auth"] == os.environ.get("VRX_API_KEY", "dummy")
     assert "from=0" in seen["url"] and "size=10" in seen["url"]
 
 
@@ -46,7 +46,7 @@ async def test_custom_auth_header_name():
 
     async with _client(handler, auth_header="authorization") as c:
         await c.request("GET", "/x")
-    assert seen["hdr"] == "secret"
+    assert seen["hdr"] == os.environ.get("VRX_API_KEY", "dummy")
 
 
 async def test_http_error_raises():

@@ -376,7 +376,8 @@ def _emit_doc(domains: list[Domain]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def generate(spec: dict, out_dir: Path, doc_path: Path) -> None:
+def generate(spec_path: Path, out_dir: Path, doc_path: Path) -> None:
+    spec = json.loads(Path(spec_path).read_text(encoding="utf-8"))
     domains = collect_domains(spec)
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -399,8 +400,7 @@ def main(argv: list[str]) -> int:
             return 1
     else:
         spec_path = DEFAULT_SPEC
-    spec = json.loads(spec_path.read_text(encoding="utf-8"))
-    generate(spec, DEFAULT_OUT_DIR, DEFAULT_DOC)
+    generate(spec_path, DEFAULT_OUT_DIR, DEFAULT_DOC)
     print(f"Generated tools from {spec_path} into {DEFAULT_OUT_DIR}")
     return 0
 
