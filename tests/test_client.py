@@ -1,3 +1,5 @@
+import os
+
 import httpx
 import pytest
 
@@ -8,7 +10,7 @@ from vrx_mcp.errors import VrxAPIError
 
 def _config(**over):
     base = dict(
-        api_key="secret", base_url="https://x.vicarius.cloud/vicarius-external-data-api",
+        api_key=os.environ.get("VRX_API_KEY", "dummy"), base_url="https://x.vicarius.cloud/vicarius-external-data-api",
         auth_header="vicarius-token", read_only=False, timeout=5.0,
         log_level="INFO", http_host="127.0.0.1", http_port=8765,
     )

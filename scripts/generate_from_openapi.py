@@ -91,7 +91,7 @@ def _fit_tool_name(name: str) -> str:
         return TOOL_NAME_OVERRIDES[name]
     if len(name) <= _MAX_TOOL_NAME:
         return name
-    digest = hashlib.md5(name.encode()).hexdigest()[:6]
+    digest = hashlib.sha256(name.encode()).hexdigest()[:6]
     return name[: _MAX_TOOL_NAME - 7].rstrip("_") + "_" + digest
 
 
@@ -376,8 +376,7 @@ def _emit_doc(domains: list[Domain]) -> str:
     return "\n".join(lines) + "\n"
 
 
-def generate(spec_path: Path, out_dir: Path, doc_path: Path) -> None:
-    spec = json.loads(Path(spec_path).read_text(encoding="utf-8"))
+def generate(spec: dict, out_dir: Path, doc_path: Path) -> None:
     domains = collect_domains(spec)
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -389,8 +388,19 @@ def generate(spec_path: Path, out_dir: Path, doc_path: Path) -> None:
 
 
 def main(argv: list[str]) -> int:
-    spec_path = Path(argv[1]) if len(argv) > 1 else DEFAULT_SPEC
-    generate(spec_path, DEFAULT_OUT_DIR, DEFAULT_DOC)
+    if len(argv) > 1:
+        raw_arg = argv[1]
+        if not any(raw_arg.endswith(ext) for ext in (".json", ".yaml", ".yml")):
+            print(f"Error: spec file must be .json, .yaml, or .yml: {raw_arg}", file=sys.stderr)
+            return 1
+        spec_path = Path(raw_arg).resolve()
+        if not spec_path.is_file():
+            print(f"Error: spec file not found: {spec_path}", file=sys.stderr)
+            return 1
+    else:
+        spec_path = DEFAULT_SPEC
+    spec = json.loads(spec_path.read_text(encoding="utf-8"))
+    generate(spec, DEFAULT_OUT_DIR, DEFAULT_DOC)
     print(f"Generated tools from {spec_path} into {DEFAULT_OUT_DIR}")
     return 0
 

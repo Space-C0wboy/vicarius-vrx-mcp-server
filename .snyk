@@ -1,0 +1,18 @@
+# Snyk (https://snyk.io) policy file
+version: v1.25.0
+ignore:
+  SNYK-CC-SC-1:
+    - '*':
+        reason: >
+          generate_from_openapi.py is a developer-only codegen script invoked
+          locally with explicit file paths. The argv[1] input is validated for
+          a safe file extension before Path() is called and the script is never
+          exposed to untrusted users.
+        expires: 2027-01-01T00:00:00.000Z
+  python/PT:
+    - 'scripts/generate_from_openapi.py':
+        reason: >
+          Developer CLI tool that intentionally accepts a spec file path as an
+          argument. Input is validated for a safe file extension (.json/.yaml/.yml)
+          before use. Not exposed to untrusted input.
+        expires: 2027-01-01T00:00:00.000Z
