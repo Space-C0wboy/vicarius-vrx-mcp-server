@@ -36,7 +36,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0.0", "pytest-asyncio>=0.23.0", "ruff>=0.5.0", "build>=1.2.0", "twine>=5.0.0"]
+dev = ["pytest>=8.0.0", "pytest-asyncio>=0.23.0", "ruff==0.17.3", "build>=1.2.0", "twine>=5.0.0"]
 
 [project.urls]
 Homepage = "https://github.com/Space-C0wboy/vicarius-vrx-mcp-server"
@@ -61,8 +61,11 @@ testpaths = ["tests"]
 line-length = 100
 target-version = "py310"
 
+[tool.ruff.format]
+exclude = ["src/vrx_mcp/tools/_generated/*", "*.md"]  # ruff 0.17 also formats code blocks in Markdown; docs keep their own layout
+
 [tool.ruff.lint]
-select = ["E", "F", "I", "UP", "B"]
+select = ["E", "F", "I", "UP", "B", "W"]
 
 [tool.ruff.lint.per-file-ignores]
 "src/vrx_mcp/tools/_generated/*" = ["E501"]

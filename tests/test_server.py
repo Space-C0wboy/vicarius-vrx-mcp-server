@@ -19,6 +19,7 @@ def test_build_server_ok(monkeypatch):
     from fastmcp import FastMCP
 
     from vrx_mcp.server import build_server
+
     mcp = build_server()
     assert isinstance(mcp, FastMCP)
 
@@ -27,5 +28,6 @@ def test_main_exits_2_on_config_error(monkeypatch):
     monkeypatch.delenv("VRX_API_KEY", raising=False)
     config_mod.reset_config_cache()
     from vrx_mcp.server import main
+
     rc = main(["--transport", "stdio"])
     assert rc == 2
