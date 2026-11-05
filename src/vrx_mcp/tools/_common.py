@@ -44,6 +44,4 @@ async def execute_request(
     cleaned_query = {k: coerce_json(v) for k, v in drop_none(query or {}).items()}
     cleaned_body = coerce_json(body) if body is not None else None
     client = await get_client()
-    return await client.request(
-        method, path, params=cleaned_query or None, json=cleaned_body
-    )
+    return await client.request(method, path, params=cleaned_query or None, json=cleaned_body)

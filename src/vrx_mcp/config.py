@@ -29,9 +29,7 @@ class Config:
     def from_env(cls) -> Config:
         api_key = os.getenv("VRX_API_KEY", "").strip()
         if not api_key:
-            raise ConfigError(
-                "VRX_API_KEY is required. Set it in your environment or .env file."
-            )
+            raise ConfigError("VRX_API_KEY is required. Set it in your environment or .env file.")
 
         base_url = os.getenv("VRX_BASE_URL", "").strip().rstrip("/")
         if not base_url:

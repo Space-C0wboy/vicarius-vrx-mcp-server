@@ -1,4 +1,3 @@
-
 from vrx_mcp.tools import _common
 
 
@@ -11,7 +10,7 @@ def test_coerce_json_parses_object_string():
 
 
 def test_coerce_json_parses_array_string():
-    assert _common.coerce_json('[1, 2]') == [1, 2]
+    assert _common.coerce_json("[1, 2]") == [1, 2]
 
 
 def test_coerce_json_leaves_plain_string():
@@ -36,7 +35,8 @@ async def test_execute_request_interpolates_path_and_cleans(monkeypatch):
     monkeypatch.setattr(_common, "get_client", fake_get_client)
 
     out = await _common.execute_request(
-        "GET", "/endpoint/{id}/detail",
+        "GET",
+        "/endpoint/{id}/detail",
         path_params={"id": 42},
         query={"from": 0, "size": None, "q": '{"x":1}'},
         body=None,

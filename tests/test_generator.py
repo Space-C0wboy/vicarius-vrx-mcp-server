@@ -17,6 +17,7 @@ def _load_generator():
 def test_domain_and_operations_parsed():
     gen = _load_generator()
     import json
+
     spec = json.loads(FIXTURE.read_text())
     domains = gen.collect_domains(spec)
     names = {d.module_name for d in domains}
@@ -26,6 +27,7 @@ def test_domain_and_operations_parsed():
 def test_get_post_search_twin_deduped_keeps_post():
     gen = _load_generator()
     import json
+
     spec = json.loads(FIXTURE.read_text())
     domains = {d.module_name: d for d in gen.collect_domains(spec)}
     vuln_ops = domains["vulnerability"].operations
@@ -37,6 +39,7 @@ def test_get_post_search_twin_deduped_keeps_post():
 def test_mutating_classification():
     gen = _load_generator()
     import json
+
     spec = json.loads(FIXTURE.read_text())
     by_name = {}
     for d in gen.collect_domains(spec):
@@ -54,15 +57,19 @@ def test_mutating_classification():
 def test_tool_names_within_mcp_64_char_limit():
     gen = _load_generator()
     import json
+
     spec = json.loads(FIXTURE.read_text())
     names = [o.tool_name for d in gen.collect_domains(spec) for o in d.operations]
     # The fixture includes a deliberately long operation; every emitted name must fit.
     assert names, "expected some tools"
     assert all(len(n) <= 64 for n in names), [n for n in names if len(n) > 64]
     # Hand-picked overrides win when present.
-    assert gen._fit_tool_name(
-        "organization_endpoint_publisher_operating_systems_locate_object_position"
-    ) == "org_endpoint_publisher_os_locate_position"
+    assert (
+        gen._fit_tool_name(
+            "organization_endpoint_publisher_operating_systems_locate_object_position"
+        )
+        == "org_endpoint_publisher_os_locate_position"
+    )
 
 
 def test_param_name_sanitization():

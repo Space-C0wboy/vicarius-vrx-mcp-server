@@ -92,8 +92,9 @@ class VrxClient:
         next_backoff: float | None = None
         for attempt in range(_MAX_RETRIES):
             if next_backoff is not None:
-                logger.warning("Retry %d/%d — backing off %.2fs",
-                               attempt, _MAX_RETRIES - 1, next_backoff)
+                logger.warning(
+                    "Retry %d/%d — backing off %.2fs", attempt, _MAX_RETRIES - 1, next_backoff
+                )
                 await asyncio.sleep(next_backoff)
                 next_backoff = None
 

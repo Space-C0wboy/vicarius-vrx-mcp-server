@@ -266,7 +266,7 @@ def _emit_tool(op: Operation) -> str:
     )
     hints = _constraint_hints(op)
     desc = f"{base} {hints}".strip() if hints else base
-    lines.append(f'    @mcp.tool(name={json.dumps(op.tool_name)}, description={json.dumps(desc)})')
+    lines.append(f"    @mcp.tool(name={json.dumps(op.tool_name)}, description={json.dumps(desc)})")
     sig = [f"    async def {op.tool_name}("]
 
     # Path params: required, no default.
@@ -274,7 +274,9 @@ def _emit_tool(op: Operation) -> str:
     for p in op.path_params:
         py = safe_param_name(p["name"])
         annot = _annot(p.get("schema", {}))
-        sig.append(f"        {py}: Annotated[{annot}, Field(description={json.dumps('path param ' + p['name'])})],")
+        sig.append(
+            f"        {py}: Annotated[{annot}, Field(description={json.dumps('path param ' + p['name'])})],"
+        )
         path_map.append(f"{json.dumps(p['name'])}: {py}")
 
     # Query params: optional.
@@ -326,9 +328,7 @@ def _emit_module(domain: Domain) -> str:
     mut = [o for o in domain.operations if o.mutating]
     # Only import Annotated/Field when some operation actually declares params or a body;
     # otherwise ruff (F401) flags the unused imports in param-less domains.
-    needs_field = any(
-        o.path_params or o.query_params or o.has_body for o in domain.operations
-    )
+    needs_field = any(o.path_params or o.query_params or o.has_body for o in domain.operations)
     typing_imports = "Annotated, Any" if needs_field else "Any"
     pydantic_import = "from pydantic import Field\n\n" if needs_field else "\n"
     header = _MODULE_HEADER.format(
@@ -369,10 +369,17 @@ def _emit_init(domains: list[Domain]) -> str:
 
 
 def _emit_doc(domains: list[Domain]) -> str:
-    lines = ["# vRx MCP Tool Catalog", "", "| Tool | Method | Path | Mutating |", "|------|--------|------|:--------:|"]
+    lines = [
+        "# vRx MCP Tool Catalog",
+        "",
+        "| Tool | Method | Path | Mutating |",
+        "|------|--------|------|:--------:|",
+    ]
     for d in domains:
         for o in d.operations:
-            lines.append(f"| `{o.tool_name}` | {o.method} | `{o.path}` | {'yes' if o.mutating else 'no'} |")
+            lines.append(
+                f"| `{o.tool_name}` | {o.method} | `{o.path}` | {'yes' if o.mutating else 'no'} |"
+            )
     return "\n".join(lines) + "\n"
 
 
@@ -382,7 +389,9 @@ def generate(spec_path: Path, out_dir: Path, doc_path: Path) -> None:
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     for d in domains:
-        (out_dir / f"{d.module_name}.py").write_text(_emit_module(d), encoding="utf-8", newline="\n")
+        (out_dir / f"{d.module_name}.py").write_text(
+            _emit_module(d), encoding="utf-8", newline="\n"
+        )
     (out_dir / "__init__.py").write_text(_emit_init(domains), encoding="utf-8", newline="\n")
     Path(doc_path).parent.mkdir(parents=True, exist_ok=True)
     Path(doc_path).write_text(_emit_doc(domains), encoding="utf-8", newline="\n")

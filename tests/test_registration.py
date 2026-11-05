@@ -23,6 +23,7 @@ async def test_full_mode_registers_mutating_and_escape_hatch(monkeypatch):
     monkeypatch.setenv("VRX_READ_ONLY", "false")
     config_mod.reset_config_cache()
     from vrx_mcp.tools import register_all
+
     mcp = FastMCP(name="t")
     register_all(mcp)
     names = await _names(mcp)
@@ -37,6 +38,7 @@ async def test_read_only_hides_mutating(monkeypatch):
     monkeypatch.setenv("VRX_READ_ONLY", "true")
     config_mod.reset_config_cache()
     from vrx_mcp.tools import register_all
+
     mcp = FastMCP(name="t")
     register_all(mcp)
     names = await _names(mcp)

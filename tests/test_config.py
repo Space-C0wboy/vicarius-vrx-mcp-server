@@ -7,9 +7,16 @@ from vrx_mcp.errors import ConfigError
 @pytest.fixture(autouse=True)
 def _clear(monkeypatch):
     # Strip every VRX_* var so each test controls the environment.
-    for var in ("VRX_API_KEY", "VRX_BASE_URL", "VRX_AUTH_HEADER",
-                "VRX_READ_ONLY", "VRX_TIMEOUT", "LOG_LEVEL",
-                "MCP_HTTP_HOST", "MCP_HTTP_PORT"):
+    for var in (
+        "VRX_API_KEY",
+        "VRX_BASE_URL",
+        "VRX_AUTH_HEADER",
+        "VRX_READ_ONLY",
+        "VRX_TIMEOUT",
+        "LOG_LEVEL",
+        "MCP_HTTP_HOST",
+        "MCP_HTTP_PORT",
+    ):
         monkeypatch.delenv(var, raising=False)
     reset_config_cache()
     yield
